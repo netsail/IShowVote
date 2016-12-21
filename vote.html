@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0,maximum-scale=1.0,minimum-scale=1.0,user-scalable=no" />
+<title>年会节目投票</title>
+<script src="js/zepto.min.js"
+	type="text/javascript"></script>
+</head>
+<body>
+	<div>
+		<menu>
+			<li><input type="checkbox" name="voteItem" value="1">节目一</li>
+			<li><input type="checkbox" name="voteItem" value="2">节目二</li>
+			<li><input type="checkbox" name="voteItem" value="3">节目三</li>
+			<li><input type="checkbox" name="voteItem" value="4">节目四</li>
+			<li><input type="checkbox" name="voteItem" value="5">节目五</li>
+			<li><input type="checkbox" name="voteItem" value="6">节目六</li>
+			<li><input type="checkbox" name="voteItem" value="7">节目七</li>
+		</menu>
+		<button id="submitVote">投票</button>
+	</div>
+</body>
+</html>
+<script>
+	(function($) {
+		$("#submitVote").click(function() {
+			vArr = checkVal();
+			if (validate()) {
+				$.ajax({
+					type : 'POST',
+					url : 'vote.php',
+					data : {
+						ids : vArr.join(',')
+					},
+					dataType : 'json',
+					success : function(data) {
+						location.href = data.authUrl;
+					},
+				});
+			}
+		});
+		var validate = function() {
+			if (vArr.length != 3) {
+				alert("请选三个满意的节目进行投票！");
+				return false;
+			}
+			return true;
+		};
+		var checkVal = function() {
+			var vArr = new Array();
+			$('input:checked').each(function(i, v) {
+				if (v.value > 0 && v.value <= 7) {
+					vArr.push(v.value);
+				}
+			});
+			return vArr;
+		}
+
+	})(Zepto);
+</script>

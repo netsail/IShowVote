@@ -1,0 +1,259 @@
+html,body,ul,li,ol,a,p,span,h1,h2,h3,h4,h5,h6,img,footer,dl,dt,dd{margin:0; padding:0;}
+body{
+    height:100%;
+    margin:0 auto;
+    max-width:640px;
+    min-width:320px;
+    font-size:14px;
+    font-family:Tahoma,Arial,Roboto,”Droid Sans”,”Helvetica Neue”,”Droid Sans Fallback”,”Heiti SC”,sans-self;
+}
+body a{
+    text-decoration:none;
+    transition:0.5s all;
+    -webkit-transition:0.5s all;
+    -o-transition:0.5s all;
+    -moz-transition:0.5s all;
+    -ms-transition:0.5s all;
+	cursor:pointer;
+	color:#156097;
+}
+ul li{list-style-type:none;}
+.red{color:#f10215;}
+/*10:42*/
+#container
+{
+    margin:0 auto;
+    position:relative;
+}
+#container:before,#container:after
+{
+    content: "";
+    display: table;
+}
+#container:after{clear:both}
+#container{*zoom:1;}
+.box{float:left; width:50%; box-sizing: border-box;}
+.box p{white-space:nowrap;}
+#container div{padding:5px;}
+
+.frame{margin:0 auto;}
+.hide{display:none;}
+.tab_case{width:calc(100% - 22px); margin:0 auto 14px;}
+.sort_nav ul li{float:left; border-bottom:1px solid #f39316; cursor:pointer; display:inline-block; text-align:left; width:100%; font-size:16px; padding-bottom:6px; color:#464646;}
+.sort_nav{zoom:1;}
+.sort_nav:after{ content:"";display:block;clear:both}
+.tab_box dl{vertical-align:top; background:#edf4ed; overflow:hidden; padding-bottom:5px;}
+.tab_box dl dt{ color:#b6d2de; border: 1px solid #ccc; background:#f5c30c; width:calc(100% - 12px); margin:5px auto;}
+.tab_box dl dt img{width:100%; display:block; margin:0 auto;}
+.tab_box dl dt h1{color:#fff; text-align:center; font-weight:inherit; font-size:16px; margin:5px auto;}
+.tab_box dl dd{font-size:14px; width:calc(100% - 12px); margin:0 auto; color:#5d5d5d;}
+.tab_box dd a{
+    font-size:18px;
+    color:#fff;
+    text-align:center;
+    display:block;
+    background:#fc9d57;
+    width:88px;
+    height:38px;
+    line-height:38px;
+    border-radius:5px;
+    -webkit-border-radius:6px;
+    -moz-border-radius:6px;
+    float:right;
+    margin-top:8px;
+}
+.tab_box dd span{float:left; margin-top:27px; color:#f10215;}
+@media screen and (max-width:319px)
+{
+    .header_list ul li{width:96px; height:52px; padding-top:15px!important;}
+    .tab_box dd a{width:100%!important;}
+    .tab_box span{margin-top:10px!important;}
+}
+
+/* Checkmark style starts */
+@-moz-keyframes dothabottomcheck {
+  0% {
+    height: 0;
+  }
+
+  100% {
+    height: 12px;
+  }
+}
+@-webkit-keyframes dothabottomcheck {
+  0% {
+    height: 0;
+  }
+
+  100% {
+    height: 12px;
+  }
+}
+@keyframes dothabottomcheck {
+  0% {
+    height: 0;
+  }
+
+  100% {
+    height: 12px;
+  }
+}
+@keyframes dothatopcheck {
+  0% {
+    height: 0;
+  }
+
+  50% {
+    height: 0;
+  }
+
+  100% {
+    height: 25px;
+  }
+}
+@-webkit-keyframes dothatopcheck {
+  0% {
+    height: 0;
+  }
+
+  50% {
+    height: 0;
+  }
+
+  100% {
+    height: 25px;
+  }
+}
+@-moz-keyframes dothatopcheck {
+  0% {
+    height: 0;
+  }
+
+  50% {
+    height: 0;
+  }
+
+  100% {
+    height: 25px;
+  }
+}
+input[type=checkbox] {
+  display: none;
+}
+em{
+	font-style: normal;
+	color:#f10215;
+}
+.check-box {
+	position: relative;
+	top: 7px;
+	left: 5px;
+  height: 25px;
+  width: 25px;
+  background-color: #fff;
+  border: 3px solid #21759b;
+  border-radius: 3px;
+  position: relative;
+  display: inline-block;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -moz-transition: border-color ease 0.2s;
+  -o-transition: border-color ease 0.2s;
+  -webkit-transition: border-color ease 0.2s;
+  transition: border-color ease 0.2s;
+  cursor: pointer;
+}
+.check-box::before, .check-box::after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  position: absolute;
+  height: 0;
+  width: 5px;
+  background-color: #34b93d;
+  display: inline-block;
+  -moz-transform-origin: left top;
+  -ms-transform-origin: left top;
+  -o-transform-origin: left top;
+  -webkit-transform-origin: left top;
+  transform-origin: left top;
+  border-radius: 3px;
+  content: ' ';
+  -webkit-transition: opacity ease .5;
+  -moz-transition: opacity ease .5;
+  transition: opacity ease .5;
+}
+.check-box::before {
+  top: 18px;
+  left: 10px;
+  -moz-transform: rotate(-135deg);
+  -ms-transform: rotate(-135deg);
+  -o-transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+.check-box::after {
+  top: 10px;
+  left: 1px;
+  -moz-transform: rotate(-45deg);
+  -ms-transform: rotate(-45deg);
+  -o-transform: rotate(-45deg);
+  -webkit-transform: rotate(-45deg);
+  transform: rotate(-45deg);
+}
+
+input[type=checkbox]:checked + .check-box,
+.check-box.checked {
+  border-color: #34b93d;
+}
+input[type=checkbox]:checked + .check-box::after,
+.check-box.checked::after {
+  height: 12px;
+  -moz-animation: dothabottomcheck 0.2s ease 0s forwards;
+  -o-animation: dothabottomcheck 0.2s ease 0s forwards;
+  -webkit-animation: dothabottomcheck 0.2s ease 0s forwards;
+  animation: dothabottomcheck 0.2s ease 0s forwards;
+}
+input[type=checkbox]:checked + .check-box::before,
+.check-box.checked::before {
+  height: 30px;
+  -moz-animation: dothatopcheck 0.4s ease 0s forwards;
+  -o-animation: dothatopcheck 0.4s ease 0s forwards;
+  -webkit-animation: dothatopcheck 0.4s ease 0s forwards;
+  animation: dothatopcheck 0.4s ease 0s forwards;
+}
+
+
+.footer-nav{background:#32394b; font-size:0px;}
+.footer-nav ul li{display:inline-block; text-align:center; width:25%;}
+.footer-nav ul li span{color:#fff; font-size:14px;}
+.footer-nav ul li .icon{margin:8px auto; display:block; width:25px; height:25px;}
+.footer-nav ul li .icon img{width:100%; height:100%;}
+.footer-nav ul li a{display: block; overflow: hidden;}
+.footer{position:fixed; bottom:0; left:0; width:100%; z-index:9999;}
+.ad-content{margin-top:50px;margin-bottom:50px;}
+.footer-nav ul li a:hover {
+    background:-moz-linear-gradient(bottom, #606c88, #3f4c6b);
+    background:-webkit-gradient(linear, left bottom, left top, from(#606c88), to(#3f4c6b));
+    text-shadow:0px 0px 2px #000;
+}
+.footer-nav ul li  .button{
+    font-size:18px;
+    color:#fff;
+    text-align:center;
+    display:block;
+    background:#fc9d57;
+    width:88px;
+    height:38px;
+    line-height:38px;
+    border-radius:5px;
+    -webkit-border-radius:6px;
+    -moz-border-radius:6px;
+    float:right;
+    margin-top:8px;
+	cursor:pointer;
+}
+#showList ul li{
+	color:#cd3315
+}

@@ -1,0 +1,230 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="shortcut icon" href="img/favicon.ico"/>
+<title>排名--word100公司年会节目投票活动</title>
+<link rel="stylesheet" href="css/common.css">
+<script type="text/javascript" src="js/ichart.latest.min.js"></script>
+<script src="js/zepto.min.js"
+	type="text/javascript"></script>
+<script type="text/javascript" src="js/common.js"></script>
+</head>
+<body background="img/back.gif" >
+	<div id="container" class="container-fluid">
+		<div id='canvasDiv'></div>
+		<div id='ichartjs_result'></div>
+
+	</div>
+	<section class="ad-content">
+	<div
+		style="height: 40px; color: #438bd1; margin: 0 auto; text-align: center;">
+		word100.com技术支持：<a href="http://www.word10.com" style="color: #438bd1;">sail</a>
+	</div>
+	</section>
+
+	<!-- 底部 -->
+	<footer class="footer"> <nav class="footer-nav">
+	<ul>
+		<li><a href="javascript:void(0)" id="aHome"> <span
+				class="icon ico"><img src="img/home_ico.png"></span><br /> <span>首页</span>
+		</a></li>
+		<li><a href="javascript:void(0)" id="aTop"> <span
+				class="icon ico1"><img src="img/top_ico.png"></span><br /> <span>排名</span>
+		</a></li>
+		<li><a href="javascript:void(0)" id="aNote"> <span
+				class="icon ico3"><img src="img/note_ico.png"></span><br /> <span>说明</span>
+		</a></li>
+	</ul>
+	</nav> </footer>
+</body>
+</html>
+<script type="text/javascript">
+	//author sail
+	(function($) {
+		var type = getPar('type') == null ? getCookie('type') : getPar('type');
+		var code = getPar('code') == null ? getCookie('code') : getPar('code');
+		var t=getPar('t');
+		var legendTable={};
+		if (type>=0&&type!=null&&type!='') {
+			setCookie('type', getPar('type'));
+		} else {
+			type = 1;
+		}
+		$('#aHome').click(function() {
+			location.href = 'home.html?type=' + type + '&r=' + Math.random();
+		});
+		$('#aTop').click(function() {
+			location.href = 'top.html?type=' + type + '&r=' + Math.random();
+		});
+		$('#aNote').click(function() {
+			location.href = 'note.html?type=' + type + '&r=' + Math.random();
+		});
+		if(t==1){
+			var legendTable={
+				enable : true,
+				background_color : "#fefefe",
+				color : "#333333",
+				legend_space:40,
+				fontsize : 20,
+				line_height:20,
+				border : {
+					color : "#BCBCBC",
+					width : 1
+				},
+				column : 1,
+				align : "right",
+				valign : "top",
+				offsetx : 0,
+				offsety : 0
+			};
+			$(".footer").hide();
+		}
+		var voteData = [ {
+			name : "正在加载排名数据...",
+			value : 0
+		} ];
+		var chart = new iChart.Column2D({
+			render : 'canvasDiv',
+			data : voteData,
+			title : {
+				text : 'word100公司年会节目投票排名',
+				color : '#3e576f',
+				height : 40,
+				fontsize : 30
+			},
+			footnote : {
+				text : 'leying.com',
+				color : '#909090',
+				fontsize : 11,
+				padding : '0 38'
+			},
+			fit : true,
+			label : {
+				fontsize : 8,
+				fontweight : 600,
+				color : '#333333',
+				shadow : true,
+				shadow_blur : 2,
+				rotate : -20,
+				textBaseline : 'middle',
+				border : {
+					width : 3,
+					enable : true,
+					color : '#0e0e0e'
+				}
+			},
+			legend : legendTable,
+			shadow : true,
+			shadow_blur : 2,
+			shadow_color : '#aaaaaa',
+			shadow_offsetx : 1,
+			shadow_offsety : 0,
+			sub_option : {
+				listeners : {
+					parseText : function(r, t) {
+						return t + "票";
+					}
+				},
+				label : {
+					fontsize : 16,
+					fontweight : 600,
+					color : '#f10215',
+					line_height : 20,
+					rotate : t=='1'?0:-20,
+				},
+				border : {
+					width : 2,
+					color : '#ffffff'
+				}
+			},
+			coordinate : {
+				background_color : null,
+				grid_color : '#c0c0c0',
+				width : '75%',
+				height : '65%',
+				axis : {
+					color : '#c0d0e0',
+					width : [ 0, 0, 1, 0 ]
+				},
+				scale : [ {
+					position : 'left',
+					start_scale : 0,
+					end_scale : 200,
+					scale_space : 80,
+					scale_enable : false,
+					label : {
+						fontsize : 16,
+						fontweight : 600,
+						color : '#666666'
+					}
+				} ]
+			}
+		});
+
+		/**
+		 *利用自定义组件构造左侧说明文本。
+		 */
+		chart
+				.plugin(new iChart.Custom(
+						{
+							drawFn : function() {
+								/**
+								 *计算位置
+								 */
+								var coo = chart.getCoordinate(), x = coo
+										.get('originx'), y = coo.get('originy'), H = coo.height;
+								/**
+								 *在左侧的位置，设置逆时针90度的旋转，渲染文字。
+								 */
+								chart.target.textAlign('center').textBaseline(
+										'middle').textFont('600 20px Verdana')
+
+							}
+						}));
+		chart.on('beforedraw', function(e) {
+			chart.START_RUN_TIME = new Date().getTime();
+			return true;
+		});
+
+		chart.on('draw', function(e) {
+			chart.END_RUN_TIME = new Date().getTime();
+			chart.RUN_TIME_COST = chart.END_RUN_TIME - chart.START_RUN_TIME;
+			$("#ichartjs_result").innerHTML = chart.RUN_TIME_COST + "ms";
+		});
+		chart.draw();
+
+		var showData=function() {
+			$.ajax({
+				type : 'POST',
+				url : 'index.php?c=ShowBill&m=getShowBillList',
+				data : {
+					type : type
+				},
+				dataType : 'json',
+				success : function(data) {
+					voteData = [];
+					for ( var i = 0; i < data.length; i++) {
+						var d = {
+							name : data[i].show_name,
+							value : data[i].point,
+							color : data[i].chart_color
+						};
+						voteData.push(d);
+						chart.load(voteData);
+						//vchart(voteData);
+					}
+
+				},
+			});
+		};			
+		showData();
+		if(t==1){
+			setInterval(showData, 8000);
+		}
+
+	})(Zepto);
+</script>

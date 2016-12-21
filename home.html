@@ -1,0 +1,179 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="shortcut icon" href="img/favicon.ico"/>
+<title>word100公司年会节目投票活动</title>
+<link rel="stylesheet" href="css/common.css?v=1">
+<script type="text/javascript"
+	src="js/zepto.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+</head>
+<body background="img/back.gif" >
+	<div id="main-content">
+		<div id="main" class="main">
+			<section class="tab_content">
+			<div class="tab_case">
+				<!--start tab_menu-->
+				<div class="sort_nav">
+					<ul>
+						<li class="bg">年会节目投票活动<span  id="voteTitle"></span></li>
+					</ul>
+				</div>
+				<!--end tab_menu-->
+				<div class="tab_box">
+					<div class="show">
+						<div class="frame" id="container">正在加载数据...</div>
+					</div>
+				</div>
+			</div>
+			</section>
+			<section class="ad-content">
+			<div
+				style="height: 40px; color: #438bd1; margin: 0 auto; text-align: center;">
+				word100.com技术支持：<a href="http://www.word10.com" style="color: #438bd1;">sail</a>
+			</div>
+			</section>
+		</div>
+	</div>
+
+	<!-- 底部 -->
+	<footer class="footer"> <nav class="footer-nav">
+	<ul>
+		<li><a href="javascript:void(0)" id="aHome"> <span
+				class="icon ico"><img src="img/home_ico.png"></span><br /> <span>首页</span>
+		</a></li>
+		<li><a href="javascript:void(0)" id="aTop"> <span
+				class="icon ico1"><img src="img/top_ico.png"></span><br /> <span>排名</span>
+		</a></li>
+		<li><a href="javascript:void(0)" id="aNote"> <span
+				class="icon ico3"><img src="img/note_ico.png"></span><br /> <span>说明</span>
+		</a></li>
+		<li><a class="button" id="submitVote">投票</a></li>
+	</ul>
+	</nav> </footer>
+	<div id="tplBox" style="display: none;">
+		<div class="box">
+			<dl>
+				<dt>
+					<div class="img-txt">
+						<a href="#"><img height="180" alt=""
+							src="http://img.leying365.com/pc/static/image/common/logo.png" /></a>
+					</div>
+					<h1>节目一</h1>
+				</dt>
+				<dd>
+					<p>DGP组</p>
+					<span><em>0</em>票<input type="checkbox" value="1"
+						id="tplCheckbox" /><label for="tplCheckbox" class="check-box"></label>
+					</span>
+					<div class="clear" style="clear: both;"></div>
+				</dd>
+			</dl>
+		</div>
+	</div>
+</body>
+</html>
+<script>
+	//author hezhifang
+	(function($) {
+		var type = getPar('type') == null ||type>2? getCookie('type') : getPar('type');
+		var code = getPar('code') == null ? getCookie('code') : getPar('code');
+		if(type!=0)$("#voteTitle").text(type==2?'(下半场)':'(上半场)');
+		if (type>=0&&type!=null&&type!='') {
+			setCookie('type', getPar('type'));
+		} else {
+			type = 1;
+		}
+		$('#aHome').click(function() {
+			location.href = 'home.html?type=' + type + '&r=' + Math.random();
+		});
+		$('#aTop').click(function() {
+			location.href = 'top.html?type=' + type + '&r=' + Math.random();
+		});
+		$('#aNote').click(function() {
+			location.href = 'note.html?type=' + type + '&r=' + Math.random();
+		});
+		$.ajax({
+			type : 'POST',
+			url : 'index.php?c=ShowBill&m=getShowBillList',
+			data : {
+				type : type
+			},
+			dataType : 'json',
+			success : function(data) {
+				var domArr = [];
+				for ( var i = 0; i < data.length; i++) {
+					var $box = $("#tplBox").clone();
+					$box.find('img').attr('src',
+							'show_img/' + data[i].id + '.jpg?v=1');
+					$box.find('input').attr('id', 'checkbox' + data[i].id);
+					$box.find('label').attr('for', 'checkbox' + data[i].id);
+					$box.find('h1').text(data[i].show_name);
+					$box.find('p').text(data[i].group_name);
+					$box.find('em').text(data[i].point);
+					$box.find('input').val(data[i].id);
+					domArr.push($box.html());
+				}
+				$("#container").empty().html(domArr.join(''));
+
+			},
+		});
+
+		$("#submitVote").click(
+				function() {
+					vArr = checkVal();
+					if (validate()) {
+						$.ajax({
+							type : 'POST',
+							url : 'index.php?c=VotePoint&m=doVote',
+							data : {
+								ids : vArr.join(','),
+								type : type,
+								code : code
+							},
+							dataType : 'json',
+							success : function(data) {
+								if (data.code == 1) {
+									for ( var i in vArr) {
+										var $em = $('#checkbox' + vArr[i])
+												.siblings('em');
+										$em.text(eval($em.text()) + 1);
+									}
+								}
+								alert(data.msg);
+								//location.href = data.authUrl;
+							},
+						});
+					}
+				});
+		var validate = function() {
+			if (vArr.length != 3) {
+				alert("请勾选三个满意的节目进行投票！" + "您勾选节目为数:" + vArr.length+'个');
+				return false;
+			}
+			var vc = prompt("请输入您的投票码", code == null || code == 'null' ? ''
+					: code);
+			if (vc != null && vc != "") {
+				code = vc;
+				setCookie('code', vc,1);
+			} else {
+				//alert("请您输入正确的投票码!");
+				return false;
+			}
+			return true;
+		};
+		var checkVal = function() {
+			var vArr = new Array();
+			$('input:checked').each(function(i, v) {
+				if (v.value > 0) {
+					vArr.push(v.value);
+				}
+			});
+			return vArr;
+		}
+	})(Zepto);
+</script>

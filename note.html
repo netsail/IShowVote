@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="shortcut icon" href="img/favicon.ico"/>
+<title>word100公司年会节目投票活动</title>
+<link rel="stylesheet" href="css/common.css">
+<script type="text/javascript"
+	src="js/zepto.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+</head>
+<body background="img/back.gif">
+	<div id="container" class="container-fluid">
+		<h1 style="color: #f5c30c">年会节目投票说明:</h1>
+		<p style="color: #f5c30c">============================</p>
+		<ul>
+			<li><p>&nbsp&nbsp年会节目投票分为上半场和下半场，即共两次投票，两次投票共用一个投票码，且每次投票必须勾选三个满意的节目。</p></li>
+			<li>------------------------------</li>
+			<li>&nbsp&nbsp<a href="home.html?type=1&r=0.4813740496407395">上半场投票入口</a></li>
+			<li>------------------------------</li>
+			<li>&nbsp&nbsp<a href="home.html?type=2&r=0.4813740496407395">下半场投票入口</a></li>
+<!-- 			<li>------------------------------</li>
+			<li>&nbsp&nbsp<a href="top.html?type=1&r=0.4813740496407395&t=1">上半场排名大屏幕</a></li>
+			<li>------------------------------</li>
+			<li>&nbsp&nbsp<a href="top.html?type=2&r=0.4813740496407395&t=1">下半场排名大屏幕</a></li> -->
+		</ul>
+		<h1 style="color: #f5c30c">年会节目单:</h1>
+		<p style="color: #f5c30c">==================</p>
+		<ul id="showList">
+		</ul>
+	</div>
+	<section class="ad-content">
+	<div
+		style="height: 40px; color: #438bd1; margin: 0 auto; text-align: center;">
+		word100.com技术支持：<a href="http://www.word10.com" style="color: #438bd1;">sail</a>
+	</div>
+	</section>
+
+	<!-- 底部 -->
+	<footer class="footer"> <nav class="footer-nav">
+	<ul>
+		<li><a href="javascript:void(0)" id="aHome"> <span
+				class="icon ico"><img src="img/home_ico.png"></span><br /> <span>首页</span>
+		</a></li>
+		<li><a href="javascript:void(0)" id="aTop"> <span
+				class="icon ico1"><img src="img/top_ico.png"></span><br /> <span>排名</span>
+		</a></li>
+		<li><a href="javascript:void(0)" id="aNote"> <span
+				class="icon ico3"><img src="img/note_ico.png"></span><br /> <span>说明</span>
+		</a></li>
+	</ul>
+	</nav> </footer>
+</body>
+</html>
+<script type="text/javascript">
+	//author hezhifang
+	(function($) {
+		var type = getPar('type') == null ? getCookie('type') : getPar('type');
+		var code = getPar('code') == null ? getCookie('code') : getPar('code');
+		if (type>=0&&type!=null&&type!='') {
+			setCookie('type', getPar('type'));
+		} else {
+			type = 1;
+		}
+		$('#aHome').click(function() {
+			location.href = 'home.html?type=' + type + '&r=' + Math.random();
+		});
+		$('#aTop').click(function() {
+			location.href = 'top.html?type=' + type + '&r=' + Math.random();
+		});
+		$('#aNote').click(function() {
+			location.href = 'note.html?type=' + type + '&r=' + Math.random();
+		});
+		$.getJSON('index.php?c=ShowBill&m=getShowBillList&type=0&sort=2', function(d) {
+			var tArr = [];
+			for ( var i = 0; i < d.length; i++) {
+				tArr.push('<li>&nbsp&nbsp' + d[i].show_name + '</i></li>');
+			}
+			$("#showList").html(tArr.join(''));
+		})
+	})(Zepto);
+</script>

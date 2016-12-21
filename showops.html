@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<link rel="shortcut icon" href="img/favicon.ico"/>
+<title>控制台word100公司年会节目投票活动</title>
+<link rel="stylesheet" href="css/common.css">
+<script type="text/javascript"
+	src="js/zepto.min.js"></script>
+<script type="text/javascript" src="js/common.js"></script>
+</head>
+<body background="img/back.gif" >
+	<div id="container" class="container-fluid">
+		<h1 style="color: red;">年会节目投票控制台:</h1>
+		<p style="color: red;">============================</p>
+		<ul>
+			<li>------------------------------</li>
+			<li>&nbsp&nbsp<a class="button"
+				url="index.php?c=ShowBill&m=doOpen&type=1">上半场投票开始</a></li>
+			<li>------------------------------</li>
+			<li>&nbsp&nbsp<a class="button"
+				url="index.php?c=ShowBill&m=doClose&type=1">上半场投票停止</a></li>
+			<li>------------------------------</li>
+			<li>&nbsp&nbsp<a class="button"
+				url="index.php?c=ShowBill&m=doOpen&type=2">下半场投票开始</a></li>
+			<li>------------------------------</li>
+			<li>&nbsp&nbsp<a class="button"
+				url="index.php?c=ShowBill&m=doClose&type=2">下半场投票停止</a></li>
+		</ul>
+	</div>
+	<section class="ad-content">
+	<div
+		style="height: 40px; color: #438bd1; margin: 0 auto; text-align: center;">
+		word100.com技术支持：<a href="http://www.word10.com" style="color: #438bd1;">sail</a>
+	</div>
+	</section>
+
+	<!-- 底部 -->
+	<footer class="footer"> <nav class="footer-nav">
+	<ul>
+		<li><a href="javascript:void(0)" id="aHome"> <span
+				class="icon ico"><img src="img/home_ico.png"></span><br /> <span>首页</span>
+		</a></li>
+		<li><a href="javascript:void(0)" id="aTop"> <span
+				class="icon ico1"><img src="img/top_ico.png"></span><br /> <span>排名</span>
+		</a></li>
+		<li><a href="javascript:void(0)" id="aNote"> <span
+				class="icon ico3"><img src="img/note_ico.png"></span><br /> <span>说明</span>
+		</a></li>
+	</ul>
+	</nav> </footer>
+</body>
+</html>
+<script type="text/javascript">
+	//author hezhifang
+	(function($) {
+		var type = getPar('type') == null ? getCookie('type') : getPar('type');
+		var code = getPar('code') == null ? getCookie('code') : getPar('code');
+		if (type != null && type != '' && type != 'null') {
+			setCookie('type', getPar('type'));
+		} else {
+			type = 1;
+		}
+		if (code != null && code != '' && code != 'null') {
+			setCookie('code', getPar('code'));
+		}
+		$('#aHome').click(function() {
+			location.href = 'home.html?type=' + type + '&r=' + Math.random();
+		});
+		$('#aTop').click(function() {
+			location.href = 'top.html?type=' + type + '&r=' + Math.random();
+		});
+		$('#aNote').click(function() {
+			location.href = 'note.html?type=' + type + '&r=' + Math.random();
+		});
+		$('.button')
+				.click(
+						function() {
+							var $this=$(this);
+							if (confirm('你确定要操作'+$this.text()+'？')) {
+								var url = $(this).attr('url');
+								url = getPar('s') == null
+										|| getPar('s').length == 0 ? url : url
+										+ '&s=' + getPar('s');
+								$.getJSON(url, function(data) {
+									alert(data.msg);
+								});
+							}
+						});
+	})(Zepto);
+</script>
